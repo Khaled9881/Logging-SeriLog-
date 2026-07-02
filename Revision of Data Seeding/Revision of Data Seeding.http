@@ -1,0 +1,6 @@
+@Revision_of_Data_Seeding_HostAddress = http://localhost:5125
+
+GET {{Revision_of_Data_Seeding_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
