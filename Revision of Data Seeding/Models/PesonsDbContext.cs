@@ -6,6 +6,12 @@ namespace Revision_of_Data_Seeding.Models
     {
         public DbSet<Person> Persons { get; set; }
         public DbSet<Country> Countries { get; set; }
+
+        public PesonsDbContext(DbContextOptions<PesonsDbContext> options) : base(options)
+        {
+
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -28,6 +34,8 @@ namespace Revision_of_Data_Seeding.Models
             {
                 modelBuilder.Entity<Person>().HasData(person);
             }
+
+            modelBuilder.Entity<Person>().HasData(new PersonData().GetPersons());
         }
     }
 }
