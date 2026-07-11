@@ -30,5 +30,7 @@ namespace Revision_of_Data_Seeding.Models
         public bool ReceiveNewsLetters { get; set; }
 
         public Country Country { get; set; }
+
+
     }
 }

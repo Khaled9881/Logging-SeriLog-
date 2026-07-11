@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Revision_of_Data_Seeding.Models;
 
@@ -11,9 +12,11 @@ using Revision_of_Data_Seeding.Models;
 namespace Revision_of_Data_Seeding.Migrations
 {
     [DbContext(typeof(PesonsDbContext))]
-    partial class PesonsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260711054917_sp2")]
+    partial class sp2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,12 +34,6 @@ namespace Revision_of_Data_Seeding.Migrations
                     b.Property<string>("CountryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TIN")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar(8)")
-                        .HasDefaultValue("ABC12345")
-                        .HasColumnName("TaxIdNumber");
-
                     b.HasKey("CountryID");
 
                     b.ToTable("Country", (string)null);
@@ -45,20 +42,17 @@ namespace Revision_of_Data_Seeding.Migrations
                         new
                         {
                             CountryID = new Guid("be699755-747b-41a6-8072-576151c53ab9"),
-                            CountryName = "USA",
-                            TIN = "ABC12345"
+                            CountryName = "USA"
                         },
                         new
                         {
                             CountryID = new Guid("40c3acb3-1855-4e9d-aad0-62f8425c37ae"),
-                            CountryName = "Canada",
-                            TIN = "ABC12345"
+                            CountryName = "Canada"
                         },
                         new
                         {
                             CountryID = new Guid("4009667f-7000-4069-b31d-b153d0325e26"),
-                            CountryName = "UK",
-                            TIN = "ABC12345"
+                            CountryName = "UK"
                         });
                 });
 

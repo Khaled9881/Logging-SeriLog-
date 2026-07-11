@@ -7,6 +7,7 @@ namespace Revision_of_Data_Seeding.Models
         [Key]
         public Guid CountryID { get; set; }
         public string? CountryName { get; set; }
+        public string? TIN { get; set; }
 
 
         List<Person>? Persons { get; set; } = new List<Person>();

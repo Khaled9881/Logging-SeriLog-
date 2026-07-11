@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Revision_of_Data_Seeding.Models;
 
@@ -11,9 +12,11 @@ using Revision_of_Data_Seeding.Models;
 namespace Revision_of_Data_Seeding.Migrations
 {
     [DbContext(typeof(PesonsDbContext))]
-    partial class PesonsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260711064310_fluentapi1")]
+    partial class fluentapi1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
