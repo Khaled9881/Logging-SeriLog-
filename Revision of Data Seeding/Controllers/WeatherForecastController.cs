@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Revision_of_Data_Seeding.Models;
 
 namespace Revision_of_Data_Seeding.Controllers
 {
@@ -6,21 +8,20 @@ namespace Revision_of_Data_Seeding.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries =
-        [
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        ];
+        private readonly PesonsDbContext pesonsDbContext;
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public WeatherForecastController(PesonsDbContext _pesonsDbContext)
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            pesonsDbContext = _pesonsDbContext;
+        }
+
+
+        [HttpGet(Name = "getallpersons")]
+        public ActionResult Get()
+        {
+            //return Ok(pesonsDbContext.Persons.FromSqlRaw("EXEC GETALLPERSONS").ToList());
+
+            return Ok(pesonsDbContext.Persons.FromSqlRaw("EXEC GETPERSONBYID @PersonID = {0}", Guid.Parse("a3b9833b-8a4d-43e9-8690-61e08df81a9a")));
         }
     }
 }
