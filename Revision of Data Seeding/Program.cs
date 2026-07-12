@@ -18,6 +18,12 @@ namespace Revision_of_Data_Seeding
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             //builder.Services.AddOpenApi();
 
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
+            builder.Logging.AddDebug();
+            builder.Logging.AddEventLog();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -25,6 +31,12 @@ namespace Revision_of_Data_Seeding
             {
                 //app.MapOpenApi();
             }
+
+            app.Logger.LogDebug("Debug");
+            app.Logger.LogInformation("Infooo");
+            app.Logger.LogWarning("!!!Warning!!!");
+            app.Logger.LogError("Errorrrrrrrrr");
+            app.Logger.LogCritical("Criticallllllll@$$%^&*");
 
             app.UseAuthorization();
 
