@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Revision_of_Data_Seeding.Middlewares;
 using Revision_of_Data_Seeding.Models;
 using Serilog;
 
@@ -47,7 +48,12 @@ namespace Revision_of_Data_Seeding
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
                 //app.MapOpenApi();
+            }
+            else
+            {
+                app.UseExceptionHandlerMiddleware();
             }
             //app.UseHttpLogging();
             //app.Logger.LogDebug("Debug");
