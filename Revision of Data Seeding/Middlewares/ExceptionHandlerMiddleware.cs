@@ -38,8 +38,10 @@ namespace Revision_of_Data_Seeding.Middlewares
 
                 //var msg = ex.InnerException?.Message ?? ex.Message;
 
-                httpContext.Response.StatusCode = 500;
-                await httpContext.Response.WriteAsync("There are custon Exception lol!!!!!!!!");
+                //httpContext.Response.StatusCode = 500;
+                //await httpContext.Response.WriteAsync("There are custon Exception lol!!!!!!!!");
+
+                throw;
             }
         }
     }

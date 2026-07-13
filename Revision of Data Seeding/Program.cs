@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Revision_of_Data_Seeding.CustomExcptions;
 using Revision_of_Data_Seeding.Middlewares;
 using Revision_of_Data_Seeding.Models;
 using Serilog;
@@ -23,6 +24,9 @@ namespace Revision_of_Data_Seeding
 
 
             builder.Services.AddControllers();
+            builder.Services.AddExceptionHandler<GlobalExceptionHanlder>();
+            builder.Services.AddProblemDetails();
+
             builder.Services.AddDbContext<PesonsDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -53,8 +57,11 @@ namespace Revision_of_Data_Seeding
             }
             else
             {
+                app.UseExceptionHandler();
                 app.UseExceptionHandlerMiddleware();
             }
+            app.UseStatusCodePages();
+
             //app.UseHttpLogging();
             //app.Logger.LogDebug("Debug");
             //app.Logger.LogInformation("Infooo");
