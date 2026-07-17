@@ -1,6 +1,8 @@
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Revision_of_Data_Seeding.CustomExcptions;
+using Revision_of_Data_Seeding.Identity;
 using Revision_of_Data_Seeding.Middlewares;
 using Revision_of_Data_Seeding.Models;
 using Serilog;
@@ -46,6 +48,11 @@ namespace Revision_of_Data_Seeding
 
 
             var app = builder.Build();
+
+            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<PesonsDbContext>()
+                .AddDefaultTokenProviders();
+
 
             app.UseSerilogRequestLogging();
 

@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Revision_of_Data_Seeding.Identity;
 
 namespace Revision_of_Data_Seeding.Models
 {
-    public class PesonsDbContext : DbContext
+    public class PesonsDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public DbSet<Person> Persons { get; set; }
         public DbSet<Country> Countries { get; set; }
@@ -111,7 +113,10 @@ namespace Revision_of_Data_Seeding.Models
                .HasForeignKey(b => b.TagID);
 
 
+            //modelBuilder.Entity<ApplicationUser>().HasData(new ApplicationUser
+            //{
 
+            //});
 
 
 

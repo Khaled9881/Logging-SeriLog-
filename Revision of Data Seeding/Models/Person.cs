@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Revision_of_Data_Seeding.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Revision_of_Data_Seeding.Models
@@ -23,6 +24,11 @@ namespace Revision_of_Data_Seeding.Models
         [ForeignKey("Country")]
         public Guid? CountryID { get; set; }
 
+        [ForeignKey("user")]
+        public Guid? UserId { get; set; }
+
+
+
         [StringLength(200)] //nvarchar(200)
         public string? Address { get; set; }
 
@@ -30,6 +36,8 @@ namespace Revision_of_Data_Seeding.Models
         public bool ReceiveNewsLetters { get; set; }
 
         public Country Country { get; set; }
+
+        public ApplicationUser user { get; set; }
 
 
     }
