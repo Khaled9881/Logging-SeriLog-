@@ -14,12 +14,16 @@ namespace Revision_of_Data_Seeding.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly PesonsDbContext pesonsDbContext;
+        private readonly RoleManager<ApplicationRole> roleManager;
 
-        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, PesonsDbContext pesonsDbContext)
+        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
+            PesonsDbContext pesonsDbContext,
+            RoleManager<ApplicationRole> roleManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.pesonsDbContext = pesonsDbContext;
+            this.roleManager = roleManager;
         }
 
 
@@ -39,6 +43,18 @@ namespace Revision_of_Data_Seeding.Controllers
             if (identityResult.Succeeded)
             {
                 await signInManager.SignInAsync(user, false);
+                if (await roleManager.FindByNameAsync("Admin") is null)
+                {
+                    ApplicationRole role = new ApplicationRole()
+                    {
+                        Name = "Admin"
+                    };
+                    await roleManager.CreateAsync(role);
+
+                    await userManager.AddToRoleAsync(user, "Admin");
+                }
+
+
                 return Created();
             }
 
@@ -59,6 +75,15 @@ namespace Revision_of_Data_Seeding.Controllers
 
             if (!result.Succeeded)
                 return Unauthorized();
+
+            return Ok();
+        }
+
+
+        [HttpGet("logout")]
+        public async Task<IActionResult> LogOut()
+        {
+            await signInManager.SignOutAsync();
 
             return Ok();
         }

@@ -46,7 +46,16 @@ namespace Revision_of_Data_Seeding
             });
 
 
-            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredUniqueChars = 3;
+
+            })
                 .AddEntityFrameworkStores<PesonsDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -76,8 +85,10 @@ namespace Revision_of_Data_Seeding
             //app.Logger.LogError("Errorrrrrrrrr");
             //app.Logger.LogCritical("Criticallllllll@$$%^&*");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
+            //app.UseRouting();
             app.MapControllers();
 
             app.Run();
