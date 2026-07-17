@@ -46,12 +46,12 @@ namespace Revision_of_Data_Seeding
             });
 
 
-
-            var app = builder.Build();
-
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<PesonsDbContext>()
                 .AddDefaultTokenProviders();
+
+            var app = builder.Build();
+
 
 
             app.UseSerilogRequestLogging();
