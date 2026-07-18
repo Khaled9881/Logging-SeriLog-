@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Revision_of_Data_Seeding.Models;
@@ -21,6 +22,8 @@ namespace Revision_of_Data_Seeding.Controllers
 
 
         [HttpGet(Name = "getallpersons")]
+        //[Authorize(Roles = "Admin")]
+        [Authorize("NotAuthorized")]
         public async Task<ActionResult> Get()
         {
             using (Operation.Time("Time for DB to return all persons"))

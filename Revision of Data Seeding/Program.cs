@@ -59,6 +59,17 @@ namespace Revision_of_Data_Seeding
                 .AddEntityFrameworkStores<PesonsDbContext>()
                 .AddDefaultTokenProviders();
 
+            builder.Services.AddAuthorization(op =>
+            {
+                op.AddPolicy("NotAuthorized", policy =>
+                {
+                    policy.RequireAssertion(context =>
+                    {
+                        return !context.User.Identity.IsAuthenticated;
+                    });
+                });
+            });
+
             var app = builder.Build();
 
 
@@ -84,6 +95,9 @@ namespace Revision_of_Data_Seeding
             //app.Logger.LogWarning("!!!Warning!!!");
             //app.Logger.LogError("Errorrrrrrrrr");
             //app.Logger.LogCritical("Criticallllllll@$$%^&*");
+
+            app.UseHsts();
+            app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();
