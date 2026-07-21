@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Revision_of_Data_Seeding.CustomExcptions;
@@ -6,6 +7,10 @@ using Revision_of_Data_Seeding.Identity;
 using Revision_of_Data_Seeding.Middlewares;
 using Revision_of_Data_Seeding.Models;
 using Serilog;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Revision_of_Data_Seeding.Interfaces;
+using Revision_of_Data_Seeding.Services;
 
 namespace Revision_of_Data_Seeding
 {
@@ -70,6 +75,35 @@ namespace Revision_of_Data_Seeding
                 });
             });
 
+
+
+            var jwtSetting = builder.Configuration.GetSection("JWT");
+            var key = Encoding.UTF8.GetBytes(jwtSetting["Key"]!);
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = jwtSetting["Issuer"],
+                        ValidAudience = jwtSetting["Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+
+            builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
+
+
             var app = builder.Build();
 
 
@@ -99,6 +133,8 @@ namespace Revision_of_Data_Seeding
             app.UseHsts();
             app.UseHttpsRedirection();
 
+
+            //app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
 

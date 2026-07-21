@@ -22,8 +22,9 @@ namespace Revision_of_Data_Seeding.Controllers
 
 
         [HttpGet(Name = "getallpersons")]
-        //[Authorize(Roles = "Admin")]
-        [Authorize("NotAuthorized")]
+        //[AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        //[Authorize("NotAuthorized")]
         public async Task<ActionResult> Get()
         {
             using (Operation.Time("Time for DB to return all persons"))
