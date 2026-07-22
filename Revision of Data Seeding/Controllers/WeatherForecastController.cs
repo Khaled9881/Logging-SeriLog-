@@ -21,7 +21,7 @@ namespace Revision_of_Data_Seeding.Controllers
         }
 
 
-        [HttpGet(Name = "getallpersons")]
+        [HttpGet("getallpersons")]
         //[AllowAnonymous]
         [Authorize(Roles = "Admin")]
         //[Authorize("NotAuthorized")]

@@ -103,6 +103,28 @@ namespace Revision_of_Data_Seeding
 
             builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
 
+            //builder.Services.AddCors(opt =>
+            //{
+            //    opt.AddDefaultPolicy(policyBuilder =>
+            //    {
+            //        policyBuilder.WithOrigins("http://localhost:4200")
+            //              .AllowAnyHeader()
+            //              .AllowAnyMethod()
+            //              .AllowCredentials();
+            //    });
+            //});
+
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularApp", policy =>
+                {
+                    policy.WithOrigins("https://localhost:4200") // your actual Angular dev URL
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials();   // required for cookies to work cross-origin
+                });
+            });
 
             var app = builder.Build();
 
@@ -130,10 +152,11 @@ namespace Revision_of_Data_Seeding
             //app.Logger.LogError("Errorrrrrrrrr");
             //app.Logger.LogCritical("Criticallllllll@$$%^&*");
 
+            app.UseCors("AllowAngularApp");
             app.UseHsts();
             app.UseHttpsRedirection();
 
-
+            //app.UseCors();
             //app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

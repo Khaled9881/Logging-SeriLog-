@@ -9,6 +9,8 @@ namespace Revision_of_Data_Seeding.Models
         public DbSet<Person> Persons { get; set; }
         public DbSet<Country> Countries { get; set; }
 
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+
         public PesonsDbContext(DbContextOptions<PesonsDbContext> options) : base(options)
         {
 
@@ -117,6 +119,17 @@ namespace Revision_of_Data_Seeding.Models
             //{
 
             //});
+
+
+            modelBuilder.Entity<RefreshToken>()
+            .HasOne(rt => rt.applicationUser)
+            .WithMany(u => u.refreshTokens)
+            .HasForeignKey(rt => rt.userId)
+            .OnDelete(DeleteBehavior.Cascade); // delete tokens when user is deleted
+
+            modelBuilder.Entity<RefreshToken>()
+                .HasIndex(rt => rt.TokenHash)
+                .IsUnique();
 
 
 
